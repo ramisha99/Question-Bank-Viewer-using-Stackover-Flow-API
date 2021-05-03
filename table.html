@@ -1,0 +1,63 @@
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+</head>
+<body>
+<style>
+h2 {
+      font-style: bold;
+      color:#20B2AA ;
+      font-size: 1em;
+  }
+</style>
+<h2>Stack Overflow Questions</h2>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+    th{
+        color:#fff;
+            }
+</style>
+
+<table style ="width:100%">
+  <tr class="bg-info">
+    <th>Author</th>
+    <th>Title</th>
+    <th>Creation Date</th>
+  </tr>
+  <tbody id="question_table_body">
+
+  </tbody>
+</table>
+
+
+<script>
+const api_url="https://api.stackexchange.com/questions?order=desc&sort=activity&site=stackoverflow";
+
+buildTable();
+
+async function buildTable(){
+    var table = document.getElementById('question_table_body')
+    const response = await fetch(api_url)
+    const data = await response.json();
+    try {
+    for (var i = 0; i < data.items.length; i++){
+      var row = `<tr>
+              <td>${data.items[i].owner.display_name}</td>
+              <td>${data.items[i].title}</td>
+              <td>${data.items[i].creation_date}</td>
+            </tr>`
+      table.innerHTML += row
+
+
+    }}catch (error) {
+   console.error(error)
+   document.write("there was an error retrieving the questions");
+ }}
+
+</script>
+</body>
+</html>
